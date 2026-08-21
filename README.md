@@ -300,6 +300,7 @@ El diagrama deberá incluir, cuando corresponda:
 
 Reemplace el siguiente bloque con su diagrama:
 
+```mermaid
 flowchart LR
     U[Usuario] -->|1. Clic en botón de WhatsApp| I[Interfaz]
     I -->|2. Dispara evento| JS[JavaScript]
