@@ -72,13 +72,15 @@ Complete la tabla:
 
   Recurso   Tipo   Dominio     Tamaño
   --------- ------ --------- --------
-                             
-                             
-                             
+ gob_linea_logo.jpg  --jpg --    --itm.edu.co--  --18255--
+ rs6.css?ver        --css--   --itm.edu.co--       58327      
+imagesloaded.min.js?ver  --js--  --itm.edu.co--   --5520 --
+01-Programas.gif      --gif--     --itm.edu.co--   --181535--                   
+ 24px.svg             --svg--      --fonts.gstatic.com--  --3340--
                              
                              
 
-**Total de solicitudes observadas:** `_____`
+**Total de solicitudes observadas:** `_121____`
 
 ## Evidencia
 
@@ -99,7 +101,7 @@ Inclúyala aquí:
 **¿Por qué una sola URL puede generar múltiples solicitudes HTTP?**
 
 > Escriba aquí su respuesta.
-
+porque una url tiene una web que trae multiples recursos diferentes
 ------------------------------------------------------------------------
 
 # 3. Análisis de una solicitud HTTP
@@ -111,12 +113,13 @@ Identifique la información solicitada a continuación.
 
   Elemento              Resultado
   --------------------- -----------
-  URL                   
-  Método HTTP           
-  Código de estado      
-  Host / dominio        
-  Tipo de recurso       
-  Tiempo de respuesta   
+  URL https://www.itm.edu.co//wp-content/uploads/2021/09/01-Programas.gif
+  
+  Método HTTP GET       
+  Código de estado  200 ok     
+  Host / dominio   itm.edu.co      
+  Tipo de recurso  gif      
+  Tiempo de respuesta   0 ms
 
 ## Flujo que se está observando
 
@@ -147,12 +150,12 @@ Inclúyala en el informe:
 **¿Qué recurso solicitó el navegador?**
 
 > Escriba aquí su respuesta.
-
+   gif
 **¿Qué información permite determinar si la solicitud fue atendida
 correctamente?**
 
 > Escriba aquí su respuesta.
-
+ el status code 200 ok
 ------------------------------------------------------------------------
 
 # 4. Inspección del DOM
@@ -176,13 +179,13 @@ Utilizando **Elementos / Elements**:
 
 ## Resultados
 
-**Elemento seleccionado:** `____________________________`
+**Elemento seleccionado:** `boton____________________________`
 
-**Etiqueta HTML:** `____________________________`
+**Etiqueta HTML:** `_______________a_____________`
 
-**Contenido original:** `____________________________`
+**Contenido original:** `__________descargar__________________`
 
-**Modificación realizada:** `____________________________`
+**Modificación realizada:** `____________nombre boton Santy________________`
 
 El proceso observado puede representarse conceptualmente así:
 
@@ -214,7 +217,7 @@ Inclúyala aquí:
 aplicación o los archivos almacenados en el servidor? Justifique.**
 
 > Escriba aquí su respuesta.
-
+No. La modificación no alteró permanentemente la aplicación ni modificó en absoluto los archivos almacenados en el servidor.Es un cambio  local y temporal 
 ------------------------------------------------------------------------
 
 # 5. Análisis de una interacción dinámica
@@ -236,12 +239,13 @@ Observe si aparece una nueva solicitud en Network.
 
   Elemento                       Resultado
   ------------------------------ -----------
-  Acción realizada               
-  ¿Generó una nueva solicitud?   
-  URL solicitada                 
-  Método HTTP                    
-  Código de estado               
-  Tipo de respuesta              
+  Acción realizada :    Clic en el botón flotante de WhatsApp para desplegar el cuadro de chat.
+  ¿Generó una nueva solicitud?   :
+  URL solicitada  data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 24 24'%3E%3Cpath d='M24 2.4 21.6 0 12 9.6 2.4 0 0 2.4 9.6 12 0 21.6 2.4 24l9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6z'/%3E%3C/svg%3E 
+
+  Método HTTP  Get    
+  Código de estado 200 ok               
+  Tipo de respuesta image/svg+xml
 
 ## Ciclo de interacción
 
@@ -278,7 +282,7 @@ Inclúyala aquí:
 solicitud observada.**
 
 > Escriba aquí su respuesta.
-
+Al hacer clic en el botón flotante de WhatsApp, el script de la página (joinchat.min.js) capturó el evento de interacción del usuario y ejecutó el código para desplegar la ventana flotante de chat.
 ------------------------------------------------------------------------
 
 # 6. Reconstrucción del flujo observado
@@ -296,10 +300,16 @@ El diagrama deberá incluir, cuando corresponda:
 
 Reemplace el siguiente bloque con su diagrama:
 
-``` mermaid
 flowchart LR
-    A[Construya aquí] --> B[su flujo observado]
-```
+    U[Usuario] -->|1. Clic en botón de WhatsApp| I[Interfaz]
+    I -->|2. Dispara evento| JS[JavaScript]
+    JS -->|3. Solicita icono SVG| N[Navegador]
+    N -->|4. Petición GET| REQ[Solicitud HTTP]
+    REQ -->|5. Consulta recurso| S[Servidor / Cache]
+    S -->|6. Estado 200 OK| RES[Respuesta HTTP]
+    RES -->|7. Entrega datos| N
+    N -->|8. Actualiza árbol| D[DOM]
+    D -->|9. Muestra ventana de chat| I
 
 ------------------------------------------------------------------------
 
@@ -312,15 +322,22 @@ Clasifique sus hallazgos:
 
 ## Elementos observados directamente
 
--   
--   
--   
+- Peticiones HTTP registradas en la pestaña Network con sus métodos (GET), códigos de estado (200 OK), rutas de URL y tipos MIME de los recursos (image/jpeg, text/css, image/svg+xml).
+
+- Recursos servidos directamente desde la memoria caché del navegador (from memory cache) y tiempos de respuesta de cada transferencia.
+
+- Estructura jerárquica del árbol DOM en la pestaña Elements y la actualización visual inmediata de la interfaz al modificar etiquetas o texto localmente.   
+
 
 ## Elementos inferidos
 
--   
--   
--   
+-   Procesamiento de scripts del lado del servidor (lenguaje PHP en WordPress) para interpretar solicitudes y armar las respuestas HTML.
+
+- Consultas a bases de datos relacionales en el servidor para recuperar el contenido dinámico del portal.
+
+- Reglas internas de optimización, seguridad y encabezados de caché configurados en el servidor web (Nginx o Apache).
+   
+
 
 > No presente como observado un proceso interno que las herramientas del
 > navegador no permitan comprobar directamente.
@@ -331,9 +348,11 @@ Clasifique sus hallazgos:
 
 Redacte **tres conclusiones técnicas** derivadas de la práctica.
 
-1.  
-2.  
-3.  
+1.  El DOM es una copia temporal en el cliente: Editar elementos en DevTools solo modifica la memoria RAM local del navegador. Al recargar la página (F5), todo vuelve a su estado original porque los archivos del servidor nunca cambian.
+
+2. Carga modular mediante peticiones HTTP: Una URL no trae la web completa en un solo archivo. El HTML actúa como plantilla guía para que el navegador pida de forma independiente cada CSS, JS o imagen necesaria.
+
+3. Interacciones dinámicas y optimización con caché: JavaScript captura los clics del usuario para solicitar solo los recursos específicos sin recargar toda la página, usando la memoria caché (200 OK from memory cache) para responder al instante.
 
 Las conclusiones deben explicar lo aprendido a partir de la evidencia y
 no limitarse a describir las actividades realizadas.
