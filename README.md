@@ -312,7 +312,6 @@ flowchart LR
     N -->|8. Actualiza árbol| D[DOM]
     D -->|9. Muestra ventana de chat| I
 
-------------------------------------------------------------------------
 
 # 7. Observado vs. inferido
 
