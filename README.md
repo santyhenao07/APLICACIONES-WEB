@@ -300,6 +300,7 @@ El diagrama deberá incluir, cuando corresponda:
 
 Reemplace el siguiente bloque con su diagrama:
 
+
 ```mermaid
 flowchart LR
     U[Usuario] -->|1. Clic en botón de WhatsApp| I[Interfaz]
@@ -311,6 +312,7 @@ flowchart LR
     RES -->|7. Entrega datos| N
     N -->|8. Actualiza árbol| D[DOM]
     D -->|9. Muestra ventana de chat| I
+```
 
 
 # 7. Observado vs. inferido
